@@ -12,8 +12,5 @@
     "encode"
   ],
   "author": "Ivan Milovanov <tequila00@yandex.ru>",
-  "license": "ISC",
-  "dependencies": {
-    "bl": "^6.0.1"
-  }
+  "license": "ISC"
 }
