@@ -1,0 +1,19 @@
+{
+  "name": "csv-encode-stream",
+  "version": "1.0.0",
+  "description": "A CSV encoder stream that produces properly escaped CSVs.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "csv",
+    "stream",
+    "encode"
+  ],
+  "author": "Ivan Milovanov <tequila00@yandex.ru>",
+  "license": "ISC",
+  "dependencies": {
+    "bl": "^6.0.1"
+  }
+}
