@@ -31,8 +31,7 @@ const CSVStream = (opts = {}) => {
       return acc + separator
     }, '')
 
-  const transformRow = row => {  
-    console.log(row)  
+  const transformRow = row => {    
     const rawRow = Array.isArray(row) ? arrRow(row) : objRow(row)    
     return rawRow.slice(0, -1) + newline
   }
@@ -54,8 +53,7 @@ const CSVStream = (opts = {}) => {
                 ? Object.keys(row[0])
                 : null
           }
-
-          console.log(opts.headers, headers)
+          
           keys = !isArray 
             ? Object.keys(row) 
             : !Array.isArray(row[0])
