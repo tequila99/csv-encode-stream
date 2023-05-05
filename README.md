@@ -4,17 +4,17 @@
 
 ## Установка
 
-```npm i @tequila99/csv-encode-stream```
+```npm i csv-encode-stream```
 
 или 
 
-```yarn add @tequila99/csv-encode-stream```
+```yarn add csv-encode-stream```
 
 ## Использование
 
 ```javascript
-const CSVStream = require('@tequila99/csv-encode-stream')
-const writer = csvWriter([options])
+const CSVStream = require('csv-encode-stream')
+const writer = CSVStream([options])
 ```
 
 `writer` является двунаправленным потоком (duplex stream)
@@ -37,7 +37,7 @@ const writer = csvWriter([options])
 Пример автоматических заголовков:
 
 ```javascript
-const CSVStream = require('@tequila99/csv-encode-stream')
+const CSVStream = require('csv-encode-stream')
 const writer = CSVStream()
 writer.pipe(fs.createWriteStream('out.csv'))
 writer.write({ hello: 'world', foo: 'bar', baz: 'taco' })
@@ -52,7 +52,7 @@ writer.end()
 Пример с заданным заголовком:
 
 ```javascript
-const CSVStream = require('@tequila99/csv-encode-stream')
+const CSVStream = require('csv-encode-stream')
 const writer = CSVStream({ headers: ['hello', 'foo'] })
 writer.pipe(fs.createWriteStream('out.csv'))
 writer.write([['world', 'bar', 'taco']])
@@ -67,7 +67,7 @@ writer.end()
 Пример без вывода строки заголовка:
 
 ```javascript
-const CSVStream = require('@tequila99/csv-encode-stream')
+const CSVStream = require('csv-encode-stream')
 const writer = CSVStream({ sendHeaders: false })
 writer.pipe(fs.createWriteStream('out.csv'))
 writer.write({hello: "world", foo: "bar", baz: "taco"})
