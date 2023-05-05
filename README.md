@@ -27,7 +27,7 @@ const writer = CSVStream([options])
   newline: '\n', // разделитель строк
   headers: undefined, // массив заголовков 
   sendHeaders: true, // признак вывода заголовка
-  useAsync: true, // асинхронный вызов вызова
+  useAsync: true, // асинхронный режим вызова
   maxCount: 200 // кол-во строк для освобождения event loop
 }
 ```
