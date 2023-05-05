@@ -11,14 +11,17 @@ const transformValue = val => {
   return 'null'
 }
 
-const CSVStream = (opts = {}) => {
+const CSVStream = (opts = {}) => {  
   const sendHeaders = opts.sendHeaders !== false
   const separator = opts.separator || ','
   const newline = opts.newline || '\n'    
+  const maxCount = opts.maxCount || 200
+  const useAsync = opts.useAsync !== undefined ? opts.useAsync : false
   
-  let headers
 
+  let headers
   let firstRow = true
+  let counter = 0 
 
   const arrRow = row => row.reduce((acc, el) => {
       acc += transformValue(el)
@@ -59,9 +62,14 @@ const CSVStream = (opts = {}) => {
           if (sendHeaders) this.push(transformRow(headers.map(el => el?.label || el)))
         }
         
-        this.push(transformRow(row))
-
-        done()
+        this.push(transformRow(row))        
+        useAsync && counter++
+        if (useAsync && counter === maxCount) {          
+          setTimeout(done, 0)
+          counter = 0 
+        } else {
+          done()
+        }
       } catch (error) {
         done(error)
       }
