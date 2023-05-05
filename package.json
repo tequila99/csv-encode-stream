@@ -1,6 +1,6 @@
 {
   "name": "csv-encode-stream",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A CSV encoder stream that produces properly escaped CSVs.",
   "main": "index.js",
   "scripts": {

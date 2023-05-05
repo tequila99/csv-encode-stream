@@ -14,10 +14,9 @@ const transformValue = val => {
 const CSVStream = (opts = {}) => {
   const sendHeaders = opts.sendHeaders !== false
   const separator = opts.separator || ','
-  const newline = opts.newline || '\n'  
-
-  let keys = []
-  let headers = []
+  const newline = opts.newline || '\n'    
+  
+  let headers
 
   let firstRow = true
 
@@ -26,10 +25,15 @@ const CSVStream = (opts = {}) => {
       return acc + separator
     }, '')
 
-  const objRow = row => keys.reduce((acc, el) => {
+  const objRow = row => typeof headers[0] === 'object'
+    ?  headers.reduce((acc, el) => {
+        acc += transformValue(row[el.key])
+        return acc + separator
+      }, '')
+    : Object.keys(row).reduce((acc, el) => {
       acc += transformValue(row[el])
       return acc + separator
-    }, '')
+      }, '')
 
   const transformRow = row => {    
     const rawRow = Array.isArray(row) ? arrRow(row) : objRow(row)    
@@ -48,26 +52,15 @@ const CSVStream = (opts = {}) => {
             headers = opts.headers
           } else {
             headers = !isArray
-              ? Object.keys(row)
-              : !Array.isArray(row[0])
-                ? Object.keys(row[0])
-                : null
-          }
-          
-          keys = !isArray 
-            ? Object.keys(row) 
-            : !Array.isArray(row[0])
-              ? Object.keys(row[0])
+              ? Object.keys(row).map(key => ({ key, label: key }))
               : null
-          if (sendHeaders) this.push(transformRow(headers))
+          }
+          if (isArray && sendHeaders && !headers) throw new Error('No headers specified')
+          if (sendHeaders) this.push(transformRow(headers.map(el => el?.label || el)))
         }
-  
-        if (isArray && !headers) throw new Error('No headers specified')
-        if (isArray) {
-          row.forEach(el => this.push(transformRow(el)))
-        } else {
-          this.push(transformRow(row))
-        }
+        
+        this.push(transformRow(row))
+
         done()
       } catch (error) {
         done(error)
